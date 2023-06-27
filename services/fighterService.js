@@ -17,9 +17,8 @@ class FighterService {
 
   create(fighterData) {
     const { name } = fighterData;
-    const allFighters = this.getAll();
-    const result = allFighters.find(
-      fighter => fighter.name.toLowerCase() === name.toLowerCase(),
+    const result = this.getAll().find(
+      fighter => fighter.name?.toLowerCase() === name.toLowerCase(),
     );
     if (result) {
       throw HttpError(409, 'Fighter already exists');

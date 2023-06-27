@@ -18,9 +18,9 @@ router.get('/', getAll);
 
 router.get('/:id', getById);
 
-router.post('/', add);
+router.post('/', createUserValid, add);
 
-router.put('/:id', update);
+router.put('/:id', updateUserValid, update);
 
 router.delete('/:id', remove);
 

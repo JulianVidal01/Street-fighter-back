@@ -1,13 +1,13 @@
-import { Router } from "express";
-import { fightersService } from "../services/fightService.js";
-import {
-  createUserValid,
-  updateUserValid,
-} from "../middlewares/user.validation.middleware.js";
-import { responseMiddleware } from "../middlewares/response.middleware.js";
+import { Router } from 'express';
+import { getAll, getById, add } from '../controllers/fightControllers.js';
+import { createFightValid } from '../middlewares/fight.validation.middleware.js';
 
 const router = Router();
 
-// OPTIONAL TODO: Implement route controller for fights
+router.get('/', getAll);
+
+router.get('/:id', getById);
+
+router.post('/', createFightValid, add);
 
 export { router };

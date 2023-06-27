@@ -23,30 +23,28 @@ class UserService {
     return user;
   }
 
-  create(userData) {
+  isUserUnique(userData) {
     const { email, phoneNumber } = userData;
-    const resultByEmail = userRepository.getOne({
-      email: email.toLowerCase(),
-    });
+    const resultByEmail = this.getAll().find(
+      user => user.email?.toLowerCase() === email?.toLowerCase(),
+    );
     const resultByPhoneNumber = userRepository.getOne({
       phoneNumber,
     });
-    if (resultByEmail || resultByPhoneNumber) {
+    return !resultByEmail && !resultByPhoneNumber;
+  }
+
+  create(userData) {
+    if (!this.isUserUnique(userData)) {
       throw HttpError(409, 'User already exists');
     }
-    const user = userRepository.create({
-      ...userData,
-      email: email.toLowerCase(),
-    });
+    const user = userRepository.create(userData);
     return user;
   }
 
   update(id, dataToUpdate) {
     this.getById(id);
-    const user = userRepository.update(id, {
-      ...dataToUpdate,
-      email: dataToUpdate.email.toLowerCase(),
-    });
+    const user = userRepository.update(id, dataToUpdate);
     return user;
   }
 

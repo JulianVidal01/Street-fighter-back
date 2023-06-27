@@ -1,9 +1,26 @@
-import { fightRepository } from "../repositories/fightRepository.js";
+import { fightRepository } from '../repositories/fightRepository.js';
+import HttpError from '../helpers/HttpError.js';
 
-class FightersService {
-  // OPTIONAL TODO: Implement methods to work with fights
+class FightsService {
+  getAll() {
+    const fights = fightRepository.getAll() || [];
+    return fights;
+  }
+
+  getById(id) {
+    const fight = fightRepository.getOne({ id });
+    if (!fight) {
+      throw HttpError(404, 'Fight not found');
+    }
+    return fight;
+  }
+
+  create(fightData) {
+    const fight = fightRepository.create(fightData);
+    return fight;
+  }
 }
 
-const fightersService = new FightersService();
+const fightService = new FightsService();
 
-export { fightersService };
+export { fightService };
